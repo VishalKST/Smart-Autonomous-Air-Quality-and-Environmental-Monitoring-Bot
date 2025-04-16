@@ -20,7 +20,8 @@ ESP32 CAM - Video live feed
 ESP 32 - Brain of the hardware has Wi-Fi and Bluetooth capabilities
 
 
-_Sensors_:
+**_Sensors_:**
+
 BMP 180 - to measure pressure accurately
 
 DHTT - to measure the present temperature of the surrounding
@@ -32,13 +33,17 @@ MQ 135- to determine the level of CO2 gas in the place where the device is prese
 OLED - for displaying the contents of the above sensor
 
 
+
 **Circuits Diagrams:**
 
 ![design](https://github.com/user-attachments/assets/47d36f87-21a3-4e07-a733-4cebd8ef8d92)
 
 ![WhatsApp Image 2025-04-04 at 23 48 42_7384d091](https://github.com/user-attachments/assets/a04b6654-9ef9-4f46-881c-8524ad4e0aff)
 
-**Output**
+
+
+
+**Output:**
 
 **_Live input of sensors values in ThingSpeak_**
 
