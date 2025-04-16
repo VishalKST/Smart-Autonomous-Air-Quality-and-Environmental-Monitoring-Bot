@@ -5,20 +5,30 @@ It is a small robot that is capable of analysing its new environment with the he
 
 L298N motor driver
 
+Tank Base with Tracks
 
 12V DC motors
+
 12V lithium ion battery pack
 
 Arduino UNO
+
 FS-TC6V and FS-R6B(Transmitter and receiver)
+
 ESP32 CAM - Video live feed 
+
 ESP 32 - Brain of the hardware has Wi-Fi and Bluetooth capabilities
+
 
 _Sensors_:
 BMP 180 - to measure pressure accurately
+
 DHTT - to measure the present temperature of the surrounding
+
 MQ 2- to measure the toxic atoms or gases in the atmosphere where the hardware is present
+
 MQ 135- to determine the level of CO2 gas in the place where the device is present
+
 OLED - for displaying the contents of the above sensor
 
 
