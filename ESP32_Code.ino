@@ -14,23 +14,23 @@ const char* password = "WiFi Password";
 const char* server = "http://api.thingspeak.com";
 String apiKey = "Paste your API Key here";
 
-// Define OLED display
+// OLED Display Setup
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
-#define OLED_RESET    4
+#define OLED_ADDR 0x3C  // I2C address from scanner
+#define OLED_RESET -1
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-// Define sensor pins
+// Sensor Pins and Initialization
 #define DHT_PIN 12
 #define DHT_TYPE DHT11
 #define MQ135_PIN 36
 #define MQ2_PIN 39
 
-// Initialize sensors
 DHT dht(DHT_PIN, DHT_TYPE);
 Adafruit_BMP085_Unified bmp;
 
-// Sensor thresholds for air quality evaluation
+// Sensor Thresholds for Air Quality Evaluation
 const int CO2_GOOD = 550;
 const int CO2_MODERATE = 850;
 const int GAS_LIGHT = 1500;
@@ -41,32 +41,49 @@ int mq135_value, mq2_value;
 
 void setup() {
   Serial.begin(115200);
+  delay(2000);
 
-  // Initialize OLED
-  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-    Serial.println("SSD1306 allocation failed");
+  // Initialize I2C Communication
+  Wire.begin(21, 22);  // Make sure your PCB uses these pins
+
+  // Initialize OLED Display
+  if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) {
+    Serial.println("SSD1306 allocation failed!");
     while (true);
   }
 
+  Serial.println("OLED initialized successfully!");
+
+  // Show Startup Message
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(10, 20);
+  display.println("Hello!");
+  display.display();
+  delay(2000);
+
+  // WiFi Connection
   display.clearDisplay();
   display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, 10);
   display.println("Connecting to WiFi...");
   display.display();
 
-  // Connect to WiFi
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
 
+  Serial.println("WiFi connected!");
   display.clearDisplay();
-  display.println("WiFi connected!");
+  display.setCursor(0, 10);
+  display.println("WiFi Connected!");
   display.display();
+  delay(2000);
 
-  // Initialize sensors
+  // Initialize Sensors
   dht.begin();
   if (!bmp.begin()) {
     Serial.println("BMP180 sensor not found!");
@@ -75,15 +92,18 @@ void setup() {
 }
 
 void loop() {
-  // Read sensors
+  // Read Sensors
   readDHT();
   readBMP();
   readGasSensors();
 
-  // Display sensor readings
+  // Display Sensor Readings
   displayReadings();
 
-  delay(2000);  // Delay before next loop iteration
+  // Upload Data to ThingSpeak
+  uploadData();
+
+  delay(2000);  // Wait before next update
 }
 
 void readDHT() {
@@ -110,51 +130,35 @@ void readGasSensors() {
 }
 
 void displayReadings() {
-  // Clear OLED display
   display.clearDisplay();
-
-  // Display temperature, humidity, and pressure
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
+  
   display.setCursor(0, 0);
-  display.print("Temperature: ");
-  display.print(temperature);
-  display.println(" C");
+  display.print("Temp: "); display.print(temperature); display.println(" C");
 
   display.setCursor(0, 10);
-  display.print("Humidity: ");
-  display.print(humidity);
-  display.println(" %");
+  display.print("Humidity: "); display.print(humidity); display.println(" %");
 
   display.setCursor(0, 20);
-  display.print("Pressure: ");
-  display.print(pressure);
-  display.println(" hPa");
+  display.print("Pressure: "); display.print(pressure); display.println(" hPa");
 
-  // Display gas sensor readings
   display.setCursor(0, 30);
-  display.print("CO2: ");
-  display.print(mq135_value);
+  display.print("CO2: "); display.print(mq135_value);
+  display.print("  Gas: "); display.print(mq2_value);
 
-  display.print("  Gas: ");
-  display.print(mq2_value);
-
-  // Evaluate air quality
-  String airQuality = evaluateAirQuality();
-  String gasStatus = evaluateGasStatus();
-
-  // Display air quality and gas status
+  // Air Quality Status
   display.setCursor(0, 40);
-  display.print("Air Quality: ");
-  display.println(airQuality);
+  display.print("Air Quality: "); display.println(evaluateAirQuality());
 
+  // Gas Status
   display.setCursor(0, 50);
-  display.print("Gas Status: ");
-  display.println(gasStatus);
+  display.print("Gas Status: "); display.println(evaluateGasStatus());
 
-  // Send buffer to the OLED
   display.display();
-  // Upload data to ThingSpeak
+}
+
+void uploadData() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
     String url = String(server) + "/update?api_key=" + apiKey +
@@ -172,8 +176,6 @@ void displayReadings() {
     }
     http.end();
   }
-
-  delay(2000);   // Wait 2 seconds before sending next data
 }
 
 String evaluateAirQuality() {
