@@ -31,6 +31,9 @@ It is a small robot that is capable of analysing its new environment with the he
 - **Sensor Board**
 ![design](https://github.com/user-attachments/assets/47d36f87-21a3-4e07-a733-4cebd8ef8d92)
 
+![Telematics_PCB](https://github.com/user-attachments/assets/7b9014ce-e372-4e30-9ec6-ffe104ea22b4)
+
+
 - **Base Tank Board**
 ![WhatsApp Image 2025-04-04 at 23 48 42_7384d091](https://github.com/user-attachments/assets/a04b6654-9ef9-4f46-881c-8524ad4e0aff)
 
