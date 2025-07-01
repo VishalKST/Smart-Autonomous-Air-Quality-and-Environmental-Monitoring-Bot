@@ -52,8 +52,13 @@ It is a small robot that is capable of analysing its new environment with the he
 
 - _**Hardware**_
   
-![Telematics_PCB](https://github.com/user-attachments/assets/7b9014ce-e372-4e30-9ec6-ffe104ea22b4)
+![WhatsApp Image 2025-07-01 at 20 20 52_1ab67fc9](https://github.com/user-attachments/assets/e1a95fa4-50c0-4183-ad72-aee4456151cd)
 ![p2](https://github.com/user-attachments/assets/7f269c24-2988-4bfd-b453-6ee4792bda6d)
+![Telematics_PCB](https://github.com/user-attachments/assets/7b9014ce-e372-4e30-9ec6-ffe104ea22b4)
+ ![WhatsApp Image 2025-07-01 at 20 20 52_d822972b](https://github.com/user-attachments/assets/845c3dd6-8fe4-4789-8720-f4d0a2736f56)
 ![WhatsApp Image 2025-04-05 at 07 56 58_3f865bf2](https://github.com/user-attachments/assets/bb35cc34-8b85-49f5-b488-9464cef714ad)
+![WhatsApp Image 2025-07-01 at 20 20 51_0ab1b808](https://github.com/user-attachments/assets/16ee921f-f41d-48d0-8458-de18e4c70ee8)
+
 ![WhatsApp Image 2025-02-13 at 17 37 05_00049d95 (1)](https://github.com/user-attachments/assets/6be26bd8-00ad-4cca-b63c-0bd3226bdc5f)
+
 https://github.com/user-attachments/assets/88ec8f43-dceb-40b7-913e-4ad02983404d
